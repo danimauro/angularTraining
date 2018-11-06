@@ -1,0 +1,113 @@
+<div id="wrapper" [ngClass]="{'toggled': side}" class="mt-5">
+
+    <!-- Sidebar -->
+    <div id="sidebar-wrapper">
+        <ul class="sidebar-nav">
+
+            <li class="sidebar-brand">
+                <a href="#">Training Certifications Center</a>
+            </li>
+            <div class="divider"></div>
+            <hr>
+
+            <div class="accordion p-2" id="accordionExample">
+                <div class="card">
+
+                    <div class="card-header" id="menu1">
+                        <a class="mb-0" class="btn btn-link" data-toggle="collapse" data-target="#collapse1" aria-expanded="true" aria-controls="collapse1">
+                            <i class="fas fa-user icon mr-3"></i>Usuarios
+                        </a>
+                    </div>
+
+                    <div id="collapse1" class="collapse" aria-labelledby="menu1" data-parent="#accordionExample">
+                        <div class="card-body">
+                            <li><a routerLink=""><i class="fas fa-user icon mr-2"></i>Estudiantes</a></li>
+                            <li><a routerLink="adminuser"><i class="fas fa-user-tie icon mr-2"></i>Administrativos</a></li>
+                        </div>
+                    </div>
+
+                </div>
+                <div class="card">
+
+                    <div class="card-header">
+                        <a class="mb-0" routerLink="eventos" class="btn btn-link" aria-expanded="true">
+                            <i class="far fa-calendar-alt icon mr-3"></i>Eventos
+                        </a>
+                    </div>
+
+                </div>
+                <div class="card">
+
+                    <div class="card-header">
+                        <a class="mb-0" class="btn btn-link" aria-expanded="true">
+                            <i class="far fa-building icon mr-3"></i>Organizaciones
+                        </a>
+                    </div>
+
+                </div>
+                <div class="card">
+
+                    <div class="card-header">
+                        <a class="mb-0" class="btn btn-link" aria-expanded="true">
+                            <i class="fas fa-chart-pie icon mr-3"></i>Invitados
+                        </a>
+                    </div>
+
+                </div>
+                <div class="card">
+
+                    <div class="card-header">
+                        <a class="mb-0" class="btn btn-link" aria-expanded="true">
+                            <i class="fas fa-chart-pie icon mr-3"></i>Categorias
+                        </a>
+                    </div>
+
+                </div>
+                <div class="card">
+
+                    <div class="card-header" id="menu2">
+                        <a class="mb-0" class="btn btn-link" aria-expanded="true">
+                            <i class="far fa-envelope icon mr-3"></i>Mensajes
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+        </ul>
+    </div>
+    <!-- /#sidebar-wrapper -->
+    <!-- Page Content -->
+    <div id="page-content-wrapper">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-lg-12">
+                    <ul class="nav my-3 border rounded shadow-sm">
+                        <li class="nav-item">
+                            <a class="nav-link active" (click)="sidebar()"><i [ngClass]="{'fa-arrow-left':side, 'fa-arrow-right': !side}" class="fas mr-2 icon"></i></a>
+                        </li>
+                        <!-- dropdown loged  -->
+                        <li class="nav-item ml-auto">
+                            <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
+                                <i class="fas fa-user icon mr-2"></i> {{ usuario.nombre }} {{ usuario.apellido }}
+                            </a>
+                            <div class="dropdown-menu" aria-labelledby="navbarDropdown">
+                                <a class="dropdown-header">{{ usuario.nombre }} {{ usuario.apellido }} </a>
+                                <div class="dropdown-divider"></div>
+                                <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Mi Perfil</a>
+                                <a class="dropdown-item" href="#" (click)="cerrarSesion()"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión</a>
+                            </div>
+                        </li>
+                        <!-- #/ dropdown loged  -->
+                        <li class="nav-item">
+                            <a class="nav-link" href="#"><i class="fas fa-bell icon mr-2"></i> Notificaciones</a>
+                        </li>
+                    </ul>
+                </div>
+                <div class="col-lg-12">
+                    <router-outlet></router-outlet>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+<!-- /#page-content-wrapper -->

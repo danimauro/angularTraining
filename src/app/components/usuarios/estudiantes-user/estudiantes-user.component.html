@@ -1,0 +1,62 @@
+<div class="alert alert-danger mt-4" role="alert" *ngIf="error">
+    {{ mensajeError }} , por seguridad en la aplicación <a href="#" (click)="renovarToken()">Inicia sesión</a> nuevamente.
+</div>
+<div class="container" *ngIf="!error">
+
+    <h4 class="fuente2 text-center mt-3"> Gestión de estudiantes</h4>
+    <hr>
+    <div class="my-3">
+        <ul class="nav">
+            <li class="nav-item">
+                <a class="nav-link text-success" style="cursor:pointer"><i class="fas fa-plus mr-2 icon"></i> Add Estudiante</a>
+            </li>
+            <li class="nav-item ml-auto">
+                <input class="form-control" [(ngModel)]="filterQuery" placeholder="Buscar por Identidad " />
+            </li>
+        </ul>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover" [mfData]="estudiantes | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+
+            <thead>
+                <tr>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="identidad">Identidad</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="email">Correo</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="telcelular">Tel Celular</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="telfijo">Tel Fijo</mfDefaultSorter>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let estudiante of mf.data">
+                    <td [routerLink]="['estudiupdate' , estudiante.id]" style="cursor:pointer">{{estudiante.identidad}}</td>
+                    <td [routerLink]="['estudiupdate' , estudiante.id]" style="cursor:pointer">{{estudiante.nombre}}</td>
+                    <td [routerLink]="['estudiupdate' , estudiante.id]" style="cursor:pointer">{{estudiante.apellido}}</td>
+                    <td [routerLink]="['estudiupdate' , estudiante.id]" style="cursor:pointer">{{estudiante.email}}</td>
+                    <td [routerLink]="['estudiupdate' , estudiante.id]" style="cursor:pointer">{{estudiante.telcel}}</td>
+                    <td [routerLink]="['estudiupdate' , estudiante.id]" style="cursor:pointer">{{estudiante.telfijo}}</td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

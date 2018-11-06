@@ -1,1 +1,21 @@
-/* You can add global styles to this file, and also import other style files */
+/*Estilos globales*/
+
+
+/*======= Fuentes ========*/
+
+@import url('https://fonts.googleapis.com/css?family=Nunito');
+@import url('https://fonts.googleapis.com/css?family=Bree+Serif|Nunito');
+
+/*=======================*/
+
+.fuente1 {
+    font-family: 'Nunito', sans-serif;
+}
+
+.fuente2 {
+    font-family: 'Bree Serif', serif;
+}
+
+body {
+    font-family: 'Nunito', sans-serif;
+}
