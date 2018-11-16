@@ -5,41 +5,42 @@ import { Usuario } from '../models/usuario.model';
 export class UserService {
   
   private isUserLoggedIn: boolean = false;
-  private usserLogged:Usuario;
 
   constructor() {}
 
   //Setear el user cuando se loguea, añadiendolo al localStorage del navegador
-  setUserLoggedIn(user:Usuario){
+  setUserLoggedIn(user: Usuario){
 
     this.isUserLoggedIn = true;
-    this.usserLogged = user;
-    localStorage.setItem('userActual', JSON.stringify(user));
+    localStorage.setItem('token', JSON.stringify(user.token));
 
   }
 
   //Devolver el user de localStorage
   getUserLoggedIn() {
     //validamos si hay algun dato del usuario guardado en el localStorage
-    if(!localStorage.getItem('userActual')){
+    if(!localStorage.getItem('token')){
       return false
     }
-  	return JSON.parse(localStorage.getItem('userActual'));
+  	return JSON.parse(localStorage.getItem('token'));
   }
 
   //borrar usuario en sesion (cerrar sesion)
   cerrarSession(){
     this.isUserLoggedIn = false;
-    this.usserLogged = null;
     localStorage.clear();
   }
 
   isLogged(){
-    return this.usserLogged;
+    return this.isUserLoggedIn;
   }
 
   renovarToken(){
     localStorage.clear();
+  }
+
+  getToken(){
+    return JSON.parse(localStorage.getItem('token'));
   }
 
 

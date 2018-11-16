@@ -1,9 +1,8 @@
 
 import { Component } from '@angular/core';
-import { Router } from '@angular/router';
-import { LoginService } from '../../../services/login.service'
-import { UserService } from '../../../services/user.service';
 import { FormGroup, FormControl, Validators } from '@angular/forms';
+import { Router } from '@angular/router';
+import { LoginService } from '../../../services/login.service';
 import { Usuario } from '../../../models/usuario.model';
 
 @Component({
@@ -18,8 +17,7 @@ export class LoginComponent{
   mensajeError: string;
   usuarioLogueado: Usuario;
 
-  constructor(private _login: LoginService, 
-              private _userService:UserService, 
+  constructor(private _login: LoginService,
               private router:Router) {
     
     this.formLogin = new FormGroup({
@@ -31,20 +29,22 @@ export class LoginComponent{
 
   onSubmitLogin(){
   
-    this._login.getLogin(this.formLogin.value).subscribe( (data : any) => {
-
-      this.usuarioLogueado = data.usuarioDB;
-      this.usuarioLogueado.token = data.token;
-      this._userService.setUserLoggedIn(this.usuarioLogueado);
+    this._login.getLogin(this.formLogin.value).subscribe( (usuarioDB : Usuario) => {
+      
       this.router.navigateByUrl('home');
 
     }, ( errorService ) => {
 
+      // Si se presenta un error en la petición se activa el mensaje en la vista
       this.error = true;
 
-      if(errorService.status == 0 || 500){
+      // Se manejan los errores por medio del codigo de respuesta de la petición
+      if(errorService.status == 0 || errorService.status == 500){
         this.mensajeError = "Error en la comunicación con el servidor";
-      }else {
+      }else if(errorService.status == 403){
+        this.mensajeError = "Usuario en estado: Inactivo, comunicarse con el administrador";
+        this.formLogin.reset();
+      }else{
         this.mensajeError = errorService.error.err.message;
         this.formLogin.reset();
       }

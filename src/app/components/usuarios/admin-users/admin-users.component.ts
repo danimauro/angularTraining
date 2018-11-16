@@ -12,8 +12,7 @@ import { Router } from '@angular/router';
 
 export class AdminUsersComponent implements OnInit {
 
-  public usuarioLogin: Usuario;
-  public usuariosAdmin: Usuario;
+  public usuarioAdmin: Usuario;
   public error: boolean;
   public mensajeError: string;
   
@@ -25,29 +24,34 @@ export class AdminUsersComponent implements OnInit {
 
   constructor(private _userService:UserService,
               private _userAdminService:UserAdminService,
-              private router:Router) { 
-
-    if(!this._userService.getUserLoggedIn()){
-      this.router.navigateByUrl('/login');
-    }
-  
-  }
+              private router:Router) {}
 
   ngOnInit() {
 
     //get a todos los usuarios con perfil de administadores registrados
-    this._userAdminService.getUserAdmins().subscribe((data:any) => {
-      this.usuariosAdmin = data.usuarioDB;
+    this._userAdminService.getUserAdmins().subscribe((usuarioAdminDB:Usuario) => {
+
+      this.usuarioAdmin = usuarioAdminDB;
+
     }, (errorService) => {
+
       this.error = true;
 
-      console.log(errorService);
+      // Se manejan los errores por medio del codigo de respuesta de la petición
+      if(errorService.status == 400){
 
-      if(errorService.status == 0 || 500){
-        this.mensajeError = "Error en la comunicación con el servidor";
-      }else{
         this.mensajeError = errorService.error.err.message;
+
+      }else if(errorService.status == 0 || errorService.status == 500){
+
+        this.mensajeError = "Error en la comunicación con el servidor"
+
+      }else if(errorService.status == 401){
+
+        this.mensajeError = this.mensajeError = errorService.error.err.message;
+
       }
+      
     });
 
   }

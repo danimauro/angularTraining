@@ -28,7 +28,7 @@ export const ROUTES: Routes = [
             {   path: 'eventos', 
                 component: EventosComponent 
             },
-            {   path: 'estudiupdate/:id', 
+            {   path: 'estudiupdate/:codigo', 
                 component: UpdateEstudiantesUserComponent 
             },           
 

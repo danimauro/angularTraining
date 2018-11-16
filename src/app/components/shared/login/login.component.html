@@ -43,7 +43,7 @@
                         <a href="#">Olvide la contraseña</a>
                     </div>
                     <div class="text-center">
-                        <button type="submit" class="btn btn-primary">Entrar</button>
+                        <button type="submit" [disabled]="!formLogin.valid" class="btn btn-primary">Entrar</button>
                     </div>
                 </form>
             </div>

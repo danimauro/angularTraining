@@ -11,8 +11,7 @@ import { Router } from '@angular/router';
 })
 export class EstudiantesUserComponent implements OnInit {
 
-  public usuarioLogin: Usuario;
-  public estudiantes: Usuario[];
+  public estudiantes: Usuario;
   public error: boolean;
   public mensajeError: string;
   
@@ -24,30 +23,37 @@ export class EstudiantesUserComponent implements OnInit {
 
   constructor(private _userService:UserService, 
               private _estudianteService:EstudianteService,
-              private router: Router) { 
-    
-    if(!this._userService.getUserLoggedIn()){
-      this.router.navigateByUrl('/login');
-    }
-
-    this.usuarioLogin = this._userService.getUserLoggedIn();
-  }
+              private router: Router) {}
 
   ngOnInit() {
-    //get a todos los estudiantes registrados que se encuentren activos en el sistema
-    this._estudianteService.getEstudiantes().subscribe((data:any) => {
-      this.estudiantes = data.usuarioDB;
+    
+    //get a todos los estudiantes registrados
+    this._estudianteService.getEstudiantes().subscribe((estudiantesDB:Usuario) => {
+
+      this.estudiantes = estudiantesDB;
+
     }, (errorService) => {
+
       this.error = true;
-      this.mensajeError = errorService.error.err.message;
+
+      // Se manejan los errores por medio del codigo de respuesta de la petición
+      if(errorService.status == 400){
+
+        this.mensajeError = errorService.error.err.message;
+
+      }else if(errorService.status == 401){
+
+        this.mensajeError = this.mensajeError = errorService.error.err.message;
+
+      }
+
     });
 
-  }
+  }  
 
   //get a solo el estudiante registrado
-  getEstudiante(estudiante:Usuario){
+  getEstudiante(estudiante: Usuario){
     this.router.navigate(['estudiupdate', estudiante.codigo ]);
-
   }
   
   //Borra el usuario del localstorage y lo redirecciona para 

@@ -1,9 +1,8 @@
 import { Component } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
-import { Usuario } from '../../../models/usuario.model';
+import { FormGroup, FormControl, Validators } from '@angular/forms'
 import { EstudianteService } from '../../../services/estudiante.service';
-import { FormGroup, FormControl, Validators } from '@angular/forms';
-import { AlertsService } from 'angular-alert-module';
+import { Usuario } from '../../../models/usuario.model';
 
 @Component({
   selector: 'app-update-estudiantes-user',
@@ -28,24 +27,25 @@ export class UpdateEstudiantesUserComponent{
   public sortOrder = "asc";
 
   constructor(private activatedRoute: ActivatedRoute, 
-              private _estudianteService:EstudianteService,
-              private alerts:AlertsService) { 
+              private _estudianteService:EstudianteService) { 
 
+    //se validan los parametros enviados por la url
     this.activatedRoute.params.subscribe( params => {
-      this.getEstudianteEventos( params['id'] );
+      this.getEstudianteEventos( params['codigo'] );
     });
 
   }
 
-  getEstudianteEventos(id:string){
-    this._estudianteService.getEstudianteEventos(id).subscribe( (data: any) => {
+  // Este metodo trae los datos basicos del estudiante y los programas que tiene relacionados
+  getEstudianteEventos(codigo:string){
 
-      //guardamos en las variables del componente los datos que trae el servicio
-      this.estudiante =  data.eventosEstudianteDB[0];
-      this.eventosEstudiante = data.eventosEstudianteDB[0].eventoUsuario;  
-      
-      // mostramos los dato en la vista cuando el servicio tenga datos de respuesta
+    this._estudianteService.getEstudianteEventos(codigo).subscribe( (estueventoDB: any) => {
 
+      // Se guardan los datos que trae el servicio en las variables locales
+      this.estudiante = estueventoDB;
+      this.eventosEstudiante = estueventoDB.eventoUsuario;  
+
+      // mostramos los datos en la vista cuando el servicio termine de cargar la información
       this.cargo = true;
 
       //se carga el formulario
@@ -70,10 +70,19 @@ export class UpdateEstudiantesUserComponent{
       //manejo de errores
       this.error = true;
 
-      if(errorService.status == 0 || 500){
-        this.mensajeError = "Error en la comunicación con el servidor";
-      }else{
+      // Se manejan los errores por medio del codigo de respuesta de la petición
+      if(errorService.status == 400){
+
         this.mensajeError = errorService.error.err.message;
+
+      }else if(errorService.status == 0 || errorService.status == 500){
+
+        this.mensajeError = "Error en la comunicación con el servidor"
+
+      }else if(errorService.status == 401){
+
+        this.mensajeError = this.mensajeError = errorService.error.err.message;
+
       }
 
     });
@@ -91,10 +100,18 @@ export class UpdateEstudiantesUserComponent{
       
       this.error = true;
 
-      if(errorService.status == 0 || 500){
-        this.mensajeError = "Error en la comunicación con el servidor";
-      }else{
+      if(errorService.status == 400){
+
         this.mensajeError = errorService.error.err.message;
+
+      }else if(errorService.status == 0 || errorService.status == 500){
+
+        this.mensajeError = "Error en la comunicación con el servidor"
+
+      }else if(errorService.status == 401){
+
+        this.mensajeError = this.mensajeError = errorService.error.err.message;
+
       }
 
     });

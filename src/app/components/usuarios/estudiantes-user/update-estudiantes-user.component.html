@@ -7,12 +7,14 @@
 
 <div class="container" *ngIf="!error">
     <div class="shadow-sm rounded">
+
         <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="correcto">
             <strong>Muy Bien!...</strong> {{ mensajeCorrecto }}
             <button type="button" class="close" data-dismiss="alert" aria-label="Close">
               <span aria-hidden="true">&times;</span>
             </button>
         </div>
+
         <form [formGroup]="formActualizarUsuario" *ngIf="cargo" (ngSubmit)="onSubmitActualizarEstu()" class="mt-3 needs-validation">
 
             <div class="my-2">
@@ -173,3 +175,4 @@
             </tfoot>
         </table>
     </div>
+</div>
