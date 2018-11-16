@@ -6,8 +6,6 @@ import { SidebarComponent } from './components/shared/sidebar/sidebar.component'
 import { EstudiantesUserComponent } from './components/usuarios/estudiantes-user/estudiantes-user.component';
 import { AdminUsersComponent } from './components/usuarios/admin-users/admin-users.component';
 
-
-
 //guards
 import { ValidUserGuard } from './guards/valid-user.guard';
 import { EventosComponent } from './components/eventos/eventos.component';

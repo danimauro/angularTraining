@@ -46,10 +46,10 @@ export class EstudiantesUserComponent implements OnInit {
 
   //get a solo el estudiante registrado
   getEstudiante(estudiante:Usuario){
-    
-    this.router.navigate(['estudiupdate', estudiante.id ]);
+    this.router.navigate(['estudiupdate', estudiante.codigo ]);
 
   }
+  
   //Borra el usuario del localstorage y lo redirecciona para 
   renovarToken(){
 

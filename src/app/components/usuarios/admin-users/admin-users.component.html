@@ -1,3 +1,81 @@
-<p>
-  admin-users works!
-</p>
+<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error">
+    {{ mensajeError }}
+    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+    <span aria-hidden="true">&times;</span>
+  </button>
+</div>
+
+<div class="container" *ngIf="!error">
+
+    <h4 class="fuente2 text-center mt-3"> Gestión de Usuarios Admin</h4>
+    <hr>
+    <div class="my-3">
+        <ul class="nav">
+            <li class="nav-item ">
+                <input class="form-control" [(ngModel)]="filterQuery" placeholder="Buscar por Identidad " />
+            </li>
+        </ul>
+    </div>
+    <div class="table-responsive">
+        <table class="table table-hover" [mfData]="usuariosAdmin | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+
+            <thead>
+                <tr>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="identidad">Identidad</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
+                    </th>
+                    <th style="width: 20%">
+                        <mfDefaultSorter by="email">Correo</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="telcelular">Tel Celular</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="telfijo">Tel Fijo</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="fecregistro">Fecha Registro</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter>Estado</mfDefaultSorter>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let usuario of mf.data">
+                    <td>{{usuario.identidad}}</td>
+                    <td>{{usuario.nombre}}</td>
+                    <td>{{usuario.apellido}}</td>
+                    <td>{{usuario.email}}</td>
+                    <td>{{usuario.telcel}}</td>
+                    <td>{{usuario.telfijo}}</td>
+                    <td>{{usuario.fecregistro | date}}</td>
+                    <td [ngClass]="{'text-success': usuario.estado, 'text-danger': !usuario.estado }"> <strong>{{usuario.estado && 'Activo' || 'Inactivo' }} </strong></td>
+                    <td *ngIf="usuario.estado">
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Usuario">
+                              <i class="fas fa-times icon"></i>
+                      </button>
+                    </td>
+                    <td *ngIf="!usuario.estado">
+                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Activar Usuario">
+                              <i class="fas fa-check-circle icon"></i>
+                      </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+</div>

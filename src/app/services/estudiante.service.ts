@@ -39,6 +39,37 @@ export class EstudianteService {
     return this.http.post(`${this.url}/estudiante`, httpOptions);
 
   }
+
+  getEstudianteEventos(id:string){
+
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'token': this.usuarioLogueado.token, 
+        'Access-Control-Allow-Origin' : '*'
+      }) 
+    }
+
+    return this.http.get(`${this.url}/estuevento/${ id }`, httpOptions);
+
+  }
+
+  putEstudiante(estudiante: Usuario, codigoEstudiante:string){
+    
+    let httpOptions = {
+      headers: new HttpHeaders({
+        'token': this.usuarioLogueado.token, 
+        'Content-Type':'application/x-www-form-urlencoded', 
+        'Access-Control-Allow-Origin' : '*'
+      })
+
+    }
+
+    let body = `nombre=${estudiante.nombre}&apellido=${estudiante.apellido}&telfijo=${estudiante.telfijo}&telcel=${estudiante.telcel}&email=${estudiante.email}&edad=${estudiante.edad}`;
+
+    return this.http.put(`${this.url}/estudiante/${ codigoEstudiante }`, body , httpOptions);
+
+
+  }
   
   
   

@@ -26,6 +26,7 @@ import { HttpClientModule } from '@angular/common/http';
 import { LoginService } from './services/login.service';
 import { UserService } from './services/user.service';
 import { EstudianteService } from './services/estudiante.service';
+import { UserAdminService } from './services/user-admin.service';
 
 //guards
 import { ValidUserGuard } from './guards/valid-user.guard';
@@ -34,6 +35,9 @@ import { DataFilterPipe } from './pipes/data-filter.pipe';
 
 //datatable 
 import { DataTableModule } from 'angular-6-datatable';
+
+//alerts
+import { AlertsModule } from 'angular-alert-module';
 
 @NgModule({
   declarations: [
@@ -54,12 +58,14 @@ import { DataTableModule } from 'angular-6-datatable';
     FormsModule,
     DataTableModule,
     ReactiveFormsModule,
+    AlertsModule.forRoot(),
     RouterModule.forRoot( ROUTES, { useHash: true } )
   ],
   providers: [ 
     LoginService,
     UserService,
     EstudianteService,
+    UserAdminService,
     ValidUserGuard
 
   ],

@@ -39,13 +39,16 @@ export class LoginComponent{
       this.router.navigateByUrl('home');
 
     }, ( errorService ) => {
+
       this.error = true;
-      console.log();
+
       if(errorService.status == 0 || 500){
         this.mensajeError = "Error en la comunicación con el servidor";
+      }else {
+        this.mensajeError = errorService.error.err.message;
+        this.formLogin.reset();
       }
-      this.mensajeError = errorService.error.err.message;
-      this.formLogin.reset();
+            
     });
     
   }
