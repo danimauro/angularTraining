@@ -1,0 +1,66 @@
+<div class="card-body">
+
+    <h5 class="fuente2 text-center my-3">Eventos asignados al estudiante: </h5>
+
+    <div class="my-2">
+        <ul class="nav">
+            <li class="nav-item mr-2">
+                <button type="button" class="btn btn-info btn-sm" routerLink=""><i class="fas fa-arrow-left"></i> Volver</button>
+            </li>
+            <li class="nav-item mr-2">
+                <button type="button" class="btn btn-success btn-sm"><i class="fas fa-pen mr-2 icon"></i>
+                    Asignar evento</button>
+            </li>
+        </ul>
+    </div>
+
+    <div class="table-responsive">
+        <table class="table table-hover" [mfData]="eventoEstudiante | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+
+            <thead>
+                <tr>
+                    <th style="width: 30%">
+                        <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
+                    </th>
+                    <th style="width: 30%">
+                        <mfDefaultSorter by="descrip">Descripción</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="fecinscrip">Fecha Inscripción</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="fectermino">Fecha Término</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter by="estado">Estado</mfDefaultSorter>
+                    </th>
+                    <th style="width: 10%">
+                        <mfDefaultSorter></mfDefaultSorter>
+                    </th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr *ngFor="let eventoEstudiante of mf.data">
+                    <td>{{eventoEstudiante.nombre}}</td>
+                    <td>{{eventoEstudiante.descrip}}</td>
+                    <td>{{eventoEstudiante.Usuevento.fecinscrip | date:"MM/dd/yy"}}</td>
+                    <td>{{eventoEstudiante.Usuevento.fectermino | date:"MM/dd/yy"}}</td>
+                    <td [ngClass]="{'text-success': eventoEstudiante.Usuevento.estado, 'text-danger': !eventoEstudiante.Usuevento.estado }"> <strong>{{eventoEstudiante.Usuevento.estado && 'Activo' || 'Inactivo' }} </strong></td>
+                    <td *ngIf="eventoEstudiante.Usuevento.estado">
+                        <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Evento">
+                                    <i class="fas fa-times icon"></i>
+                            </button>
+                    </td>
+                </tr>
+            </tbody>
+            <tfoot>
+                <tr>
+                    <td colspan="6">
+                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                    </td>
+                </tr>
+            </tfoot>
+        </table>
+    </div>
+
+</div>

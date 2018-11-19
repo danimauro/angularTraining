@@ -39,7 +39,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <a class="mb-0" class="btn btn-link" aria-expanded="true">
+                        <a class="mb-0" routerLink="organi" class="btn btn-link" aria-expanded="true">
                             <i class="far fa-building icon mr-3"></i>Organizaciones
                         </a>
                     </div>
@@ -48,7 +48,7 @@
                 <div class="card">
 
                     <div class="card-header">
-                        <a class="mb-0" class="btn btn-link" aria-expanded="true">
+                        <a class="mb-0" routerLink="invitados" class="btn btn-link" aria-expanded="true">
                             <i class="fas fa-chart-pie icon mr-3"></i>Invitados
                         </a>
                     </div>
@@ -88,10 +88,10 @@
                         <!-- dropdown loged  -->
                         <li class="nav-item ml-auto">
                             <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-toggle="dropdown" aria-haspopup="true" aria-expanded="false">
-                                <i class="fas fa-user icon mr-2"></i> {{ usuario.nombre }} {{ usuario.apellido }}
+                                <i class="fas fa-user icon mr-2"></i> {{ nombre }}
                             </a>
                             <div class="dropdown-menu" aria-labelledby="navbarDropdown">
-                                <a class="dropdown-header">{{ usuario.nombre }} {{ usuario.apellido }} </a>
+                                <a class="dropdown-header">{{ nombre }} </a>
                                 <div class="dropdown-divider"></div>
                                 <a class="dropdown-item" href="#"><i class="fas fa-user mr-2"></i>Mi Perfil</a>
                                 <a class="dropdown-item" href="#" (click)="cerrarSesion()"><i class="fas fa-sign-out-alt mr-2"></i>Cerrar Sesión</a>

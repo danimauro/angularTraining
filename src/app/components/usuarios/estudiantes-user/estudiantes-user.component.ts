@@ -6,8 +6,7 @@ import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-estudiantes-user',
-  templateUrl: './estudiantes-user.component.html',
-  styleUrls: ['./estudiantes-user.component.css']
+  templateUrl: './estudiantes-user.component.html'
 })
 export class EstudiantesUserComponent implements OnInit {
 

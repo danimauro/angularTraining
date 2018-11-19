@@ -2,7 +2,7 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { map } from 'rxjs/operators';
 import { Router } from '@angular/router';
-import { Usuario } from '../models/usuario.model';
+import { Estudiante } from '../models/estudiante.model';
 import { UserService } from './user.service';
 
 @Injectable()
@@ -10,7 +10,7 @@ export class EstudianteService {
 
   // Variables privadas del servicio
   private url:string = 'http://localhost:3000'; 
-  public estudiantes:Usuario;
+  public estudiantes:Estudiante;
 
   constructor(private http: HttpClient, 
               private _userService:UserService,
@@ -56,17 +56,20 @@ export class EstudianteService {
   // Este metodo devuelve un observable con los datos de los estudiantes registrados en el sistema
   getEstudiantes(){    
     
-    return this.http.get<Usuario>(`${this.url}/estudiantes`, this.getHeaders())
-                    .pipe( map( (estudiantesDB:Usuario) => {
+    return this.http.get<Estudiante>(`${this.url}/estudiantes`, this.getHeaders())
+                    .pipe( map( (estudiantesDB:Estudiante) => {
                         return this.estudiantes = estudiantesDB['estudiantesDB'];
                     }));
   }
 
-  // Este metodo devuelve un observable con los datos de un estudiante
+  // Este metodo devuelve un observable con los datos de un estudiante por medio de su codigo
   getEstudiante(codigo:string){
 
-    let body = `codigo=${ codigo }`
-    return this.http.post(`${this.url}/estudiante`, body, this.postHeaders());
+    return this.http.get<Estudiante>(`${this.url}/estudiante/${ codigo }`, this.getHeaders())
+                    .pipe( map( (estudianteDB:Estudiante) => {
+                      this.estudiantes = estudianteDB['estudiantesDB'][0];
+                      return this.estudiantes;
+                    }));
 
   }
 
@@ -81,7 +84,7 @@ export class EstudianteService {
 
   }
   // Este metodo devuelve un observable indicando la actualización del estudiante
-  putEstudiante(estudiante: Usuario, codigoEstudiante:string){
+  putEstudiante(estudiante: Estudiante, codigoEstudiante:string){
     
     let body = `nombre=${estudiante.nombre}&apellido=${estudiante.apellido}
                 &telfijo=${estudiante.telfijo}&telcel=${estudiante.telcel}

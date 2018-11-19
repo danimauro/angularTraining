@@ -1,6 +1,5 @@
 import { Component, OnInit } from '@angular/core';
 import { UserService } from '../../../services/user.service';
-import { Usuario } from '../../../models/usuario.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -11,9 +10,10 @@ import { Router } from '@angular/router';
 export class SidebarComponent implements OnInit {
 
   public side: boolean = true;
-  public usuario: Usuario;
+  public nombre: String;
 
-  constructor(private _userService:UserService, private router:Router) { }
+  constructor(private _userService:UserService, 
+              private router:Router) { }
 
   ngOnInit() {
     
@@ -21,7 +21,8 @@ export class SidebarComponent implements OnInit {
       this.router.navigateByUrl('/login');
     }
     
-    this.usuario = this._userService.getUserLoggedIn();
+    this.nombre = this._userService.getNombre();
+    
 
   }
   //mostrar y ocultar el menu lateral

@@ -1,178 +1,132 @@
-<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error">
-    <strong>Error!...</strong> {{ mensajeError }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+<div class="card-body">
 
-<div class="container" *ngIf="!error">
-    <div class="shadow-sm rounded">
-
-        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="correcto">
-            <strong>Muy Bien!...</strong> {{ mensajeCorrecto }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-              <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
-
-        <form [formGroup]="formActualizarUsuario" *ngIf="cargo" (ngSubmit)="onSubmitActualizarEstu()" class="mt-3 needs-validation">
-
-            <div class="my-2">
-                <ul class="nav">
-                    <li class="nav-item mr-2">
-                        <button type="button" class="btn btn-info btn-sm" routerLink=""><i class="fas fa-arrow-left"></i> Volver</button>
-                    </li>
-                    <li class="nav-item mr-2">
-                        <button type="submit" [disabled]="!formActualizarUsuario.dirty || !formActualizarUsuario.valid" class="btn btn-success btn-sm"><i class="fas fa-pen mr-2 icon"></i>
-                            Actualizar Estudiante</button>
-                    </li>
-                </ul>
-            </div>
-            <hr>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <!-- Identidad -->
-                    <label for="identidad">Identidad</label>
-                    <input formControlName="identidad" name="identidad" type="text" class="form-control" placeholder="Identidad" [ngClass]="{ 'is-invalid': formActualizarUsuario.controls['identidad'].errors?.required || formActualizarUsuario.controls['identidad'].errors?.minlength || formActualizarUsuario.controls['identidad'].errors?.pattern }">
-
-                    <div *ngIf="formActualizarUsuario.controls['identidad'].errors?.required" class="invalid-feedback">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <!-- Nombre -->
-                    <label for="identidad">Nombre</label>
-                    <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre" [ngClass]="{ 'is-invalid': formActualizarUsuario.controls['nombre'].errors?.required || formActualizarUsuario.controls['nombre'].errors?.minlength || formActualizarUsuario.controls['nombre'].errors?.pattern }">
-
-                    <div *ngIf="formActualizarUsuario.controls['nombre'].errors?.required" class="invalid-feedback">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <!-- Apellido -->
-                    <label for="identidad">Apellido</label>
-                    <input formControlName="apellido" name="apellido" type="text" class="form-control" placeholder="Apellido" [ngClass]="{ 'is-invalid': formActualizarUsuario.controls['apellido'].errors?.required || formActualizarUsuario.controls['apellido'].errors?.minlength || formActualizarUsuario.controls['apellido'].errors?.pattern }">
-
-                    <div *ngIf="formActualizarUsuario.controls['apellido'].errors?.required" class="invalid-feedback">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <!-- Sexo -->
-                    <label for="identidad">Sexo</label>
-                    <input formControlName="sexo" name="sexo" type="text" class="form-control" placeholder="Sexo" [ngClass]="{ 'is-invalid': formActualizarUsuario.controls['sexo'].errors?.required || formActualizarUsuario.controls['sexo'].errors?.minlength || formActualizarUsuario.controls['sexo'].errors?.pattern }">
-
-                    <div *ngIf="formActualizarUsuario.controls['sexo'].errors?.required" class="invalid-feedback">
-                        Este campo es requerido
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <!-- Tel Fijo -->
-                    <label for="identidad">Tel Fijo</label>
-                    <input formControlName="telfijo" name="telfijo" type="text" class="form-control" placeholder="Tel Fijo" [ngClass]="{ 'is-invalid': formActualizarUsuario.controls['telfijo'].errors?.required || formActualizarUsuario.controls['telfijo'].errors?.minlength || formActualizarUsuario.controls['telfijo'].errors?.pattern }">
-
-                    <div *ngIf="formActualizarUsuario.controls['telfijo'].errors?.required" class="invalid-feedback">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <!-- Tel Celular -->
-                    <label for="identidad">Tel Celular</label>
-                    <input formControlName="telcel" name="telcel" type="text" class="form-control" placeholder="Tel Celular" [ngClass]="{ 'is-invalid': formActualizarUsuario.controls['telcel'].errors?.required || formActualizarUsuario.controls['telcel'].errors?.minlength || formActualizarUsuario.controls['telcel'].errors?.pattern }">
-
-                    <div *ngIf="formActualizarUsuario.controls['telcel'].errors?.required" class="invalid-feedback">
-                        Este campo es requerido
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <!-- Email -->
-                    <label for="identidad">Correo Electrónico</label>
-                    <input formControlName="email" name="email" type="text" class="form-control" placeholder="Correo Electrónico" [ngClass]="{ 'is-invalid': formActualizarUsuario.controls['email'].errors?.required || formActualizarUsuario.controls['email'].errors?.minlength || formActualizarUsuario.controls['email'].errors?.pattern }">
-
-                    <div *ngIf="formActualizarUsuario.controls['email'].errors?.required" class="invalid-feedback">
-                        Este campo es requerido
-                    </div>
-
-                    <div *ngIf="formActualizarUsuario.controls['email'].errors?.minlength" class="invalid-feedback">
-                        Minumo {{ formActualizarUsuario.controls['email'].errors.minlength.requiredLength }} caracteres
-                    </div>
-
-                    <div *ngIf="formActualizarUsuario.controls['email'].errors?.pattern" class="invalid-feedback">
-                        Correo "{{ formActualizarUsuario.controls['email'].errors.pattern.actualValue }}" no válido
-                    </div>
-                </div>
-                <div class="form-group col-md-3">
-                    <!-- Edad -->
-                    <label for="identidad">Edad</label>
-                    <input formControlName="edad" name="edad" type="text" class="form-control" placeholder="Edad" [ngClass]="{ 'is-invalid': formActualizarUsuario.controls['edad'].errors?.required || formActualizarUsuario.controls['edad'].errors?.minlength || formActualizarUsuario.controls['edad'].errors?.pattern }">
-
-                    <div *ngIf="formActualizarUsuario.controls['edad'].errors?.required" class="invalid-feedback">
-                        Este campo es requerido
-                    </div>
-                </div>
-            </div>
-            <div class="form-row">
-                <div class="form-group col-md-3">
-                    <!-- Fec registro -->
-                    <label for="fecregistro">Fecha Registro</label>
-                    <div class="mt-1"> {{estudiante.fecregistro | date}} </div>
-                </div>
-            </div>
-        </form>
+    <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error">
+        <strong>Error!...</strong> {{ mensajeError }}
+        <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+            <span aria-hidden="true">&times;</span>
+        </button>
     </div>
 
+    <h5 class="fuente2 text-center my-2">Actualizar estudiante: </h5>
+
+    <div class="container" *ngIf="!error">
+        <div class="shadow-sm rounded">
+
+            <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="correcto">
+                <strong>Muy Bien!...</strong> {{ mensajeCorrecto }}
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+            </div>
 
 
-    <h5 class="fuente2 my-3">Eventos asociados al estudiante: </h5>
 
-    <div class="table-responsive">
-        <table class="table table-hover" [mfData]="eventosEstudiante | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+            <form [formGroup]="formActualizarEstudiante" *ngIf="cargo" class="mt-3 needs-validation">
 
-            <thead>
-                <tr>
-                    <th style="width: 30%">
-                        <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
-                    </th>
-                    <th style="width: 30%">
-                        <mfDefaultSorter by="descrip">Descripción</mfDefaultSorter>
-                    </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter by="fecinscrip">Fecha Inscripción</mfDefaultSorter>
-                    </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter by="fectermino">Fecha Término</mfDefaultSorter>
-                    </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter by="estado">Estado</mfDefaultSorter>
-                    </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter></mfDefaultSorter>
-                    </th>
-                </tr>
-            </thead>
-            <tbody>
-                <tr *ngFor="let eventoEstudiante of mf.data">
-                    <td>{{eventoEstudiante.nombre}}</td>
-                    <td>{{eventoEstudiante.descrip}}</td>
-                    <td>{{eventoEstudiante.Usuevento.fecinscrip | date:"MM/dd/yy"}}</td>
-                    <td>{{eventoEstudiante.Usuevento.fectermino | date:"MM/dd/yy"}}</td>
-                    <td [ngClass]="{'text-success': eventoEstudiante.Usuevento.estado, 'text-danger': !eventoEstudiante.Usuevento.estado }"> <strong>{{eventoEstudiante.Usuevento.estado && 'Activo' || 'Inactivo' }} </strong></td>
-                    <td *ngIf="eventoEstudiante.Usuevento.estado">
-                        <button type="button" (click)="desactivarEstu(eventoEstudiante.codigo, eventoEstudiante.Usuevento.usuarioId)" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Evento">
-                                <i class="fas fa-times icon"></i>
-                        </button>
-                    </td>
-                </tr>
-            </tbody>
-            <tfoot>
-                <tr>
-                    <td colspan="6">
-                        <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
-                    </td>
-                </tr>
-            </tfoot>
-        </table>
+                <div class="my-2">
+                    <ul class="nav">
+                        <li class="nav-item mr-2">
+                            <button type="button" class="btn btn-info btn-sm" routerLink=""><i class="fas fa-arrow-left"></i> Volver</button>
+                        </li>
+                        <li class="nav-item mr-2">
+                            <button type="submit" [disabled]="!formActualizarEstudiante.dirty || !formActualizarEstudiante.valid" class="btn btn-success btn-sm"><i class="fas fa-pen mr-2 icon"></i>
+                            Actualizar Estudiante</button>
+                        </li>
+                    </ul>
+                </div>
+                <hr>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <!-- Identidad -->
+                        <label for="identidad">Identidad</label>
+                        <input formControlName="identidad" name="identidad" type="text" class="form-control" placeholder="Identidad" [ngClass]="{ 'is-invalid': formActualizarEstudiante.controls['identidad'].errors?.required || formActualizarEstudiante.controls['identidad'].errors?.minlength || formActualizarEstudiante.controls['identidad'].errors?.pattern }">
+
+                        <div *ngIf="formActualizarEstudiante.controls['identidad'].errors?.required" class="invalid-feedback">
+                            Este campo es requerido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- Nombre -->
+                        <label for="identidad">Nombre</label>
+                        <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre" [ngClass]="{ 'is-invalid': formActualizarEstudiante.controls['nombre'].errors?.required || formActualizarEstudiante.controls['nombre'].errors?.minlength || formActualizarEstudiante.controls['nombre'].errors?.pattern }">
+
+                        <div *ngIf="formActualizarEstudiante.controls['nombre'].errors?.required" class="invalid-feedback">
+                            Este campo es requerido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- Apellido -->
+                        <label for="identidad">Apellido</label>
+                        <input formControlName="apellido" name="apellido" type="text" class="form-control" placeholder="Apellido" [ngClass]="{ 'is-invalid': formActualizarEstudiante.controls['apellido'].errors?.required || formActualizarEstudiante.controls['apellido'].errors?.minlength || formActualizarEstudiante.controls['apellido'].errors?.pattern }">
+
+                        <div *ngIf="formActualizarEstudiante.controls['apellido'].errors?.required" class="invalid-feedback">
+                            Este campo es requerido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- Sexo -->
+                        <label for="identidad">Sexo</label>
+                        <input formControlName="sexo" name="sexo" type="text" class="form-control" placeholder="Sexo" [ngClass]="{ 'is-invalid': formActualizarEstudiante.controls['sexo'].errors?.required || formActualizarEstudiante.controls['sexo'].errors?.minlength || formActualizarEstudiante.controls['sexo'].errors?.pattern }">
+
+                        <div *ngIf="formActualizarEstudiante.controls['sexo'].errors?.required" class="invalid-feedback">
+                            Este campo es requerido
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <!-- Tel Fijo -->
+                        <label for="identidad">Tel Fijo</label>
+                        <input formControlName="telfijo" name="telfijo" type="text" class="form-control" placeholder="Tel Fijo" [ngClass]="{ 'is-invalid': formActualizarEstudiante.controls['telfijo'].errors?.required || formActualizarEstudiante.controls['telfijo'].errors?.minlength || formActualizarEstudiante.controls['telfijo'].errors?.pattern }">
+
+                        <div *ngIf="formActualizarEstudiante.controls['telfijo'].errors?.required" class="invalid-feedback">
+                            Este campo es requerido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- Tel Celular -->
+                        <label for="identidad">Tel Celular</label>
+                        <input formControlName="telcel" name="telcel" type="text" class="form-control" placeholder="Tel Celular" [ngClass]="{ 'is-invalid': formActualizarEstudiante.controls['telcel'].errors?.required || formActualizarEstudiante.controls['telcel'].errors?.minlength || formActualizarEstudiante.controls['telcel'].errors?.pattern }">
+
+                        <div *ngIf="formActualizarEstudiante.controls['telcel'].errors?.required" class="invalid-feedback">
+                            Este campo es requerido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- Email -->
+                        <label for="identidad">Correo Electrónico</label>
+                        <input formControlName="email" name="email" type="text" class="form-control" placeholder="Correo Electrónico" [ngClass]="{ 'is-invalid': formActualizarEstudiante.controls['email'].errors?.required || formActualizarEstudiante.controls['email'].errors?.minlength || formActualizarEstudiante.controls['email'].errors?.pattern }">
+
+                        <div *ngIf="formActualizarEstudiante.controls['email'].errors?.required" class="invalid-feedback">
+                            Este campo es requerido
+                        </div>
+
+                        <div *ngIf="formActualizarEstudiante.controls['email'].errors?.minlength" class="invalid-feedback">
+                            Minumo {{ formActualizarEstudiante.controls['email'].errors.minlength.requiredLength }} caracteres
+                        </div>
+
+                        <div *ngIf="formActualizarEstudiante.controls['email'].errors?.pattern" class="invalid-feedback">
+                            Correo "{{ formActualizarEstudiante.controls['email'].errors.pattern.actualValue }}" no válido
+                        </div>
+                    </div>
+                    <div class="form-group col-md-3">
+                        <!-- Edad -->
+                        <label for="identidad">Edad</label>
+                        <input formControlName="edad" name="edad" type="text" class="form-control" placeholder="Edad" [ngClass]="{ 'is-invalid': formActualizarEstudiante.controls['edad'].errors?.required || formActualizarEstudiante.controls['edad'].errors?.minlength || formActualizarEstudiante.controls['edad'].errors?.pattern }">
+
+                        <div *ngIf="formActualizarEstudiante.controls['edad'].errors?.required" class="invalid-feedback">
+                            Este campo es requerido
+                        </div>
+                    </div>
+                </div>
+                <div class="form-row">
+                    <div class="form-group col-md-3">
+                        <!-- Fec registro -->
+                        <label for="fecregistro">Fecha Registro</label>
+                        <div class="mt-1"> {{estudiante.fecregistro | date}} </div>
+                    </div>
+                </div>
+            </form>
+        </div>
     </div>
 </div>

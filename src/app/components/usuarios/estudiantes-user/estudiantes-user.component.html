@@ -55,13 +55,13 @@
             </thead>
             <tbody>
                 <tr *ngFor="let estudiante of mf.data">
-                    <td [routerLink]="['estudiupdate' , estudiante.codigo]" style="cursor:pointer">{{estudiante.identidad}}</td>
-                    <td [routerLink]="['estudiupdate' , estudiante.codigo]" style="cursor:pointer">{{estudiante.nombre}}</td>
-                    <td [routerLink]="['estudiupdate' , estudiante.codigo]" style="cursor:pointer">{{estudiante.apellido}}</td>
-                    <td [routerLink]="['estudiupdate' , estudiante.codigo]" style="cursor:pointer">{{estudiante.email}}</td>
-                    <td [routerLink]="['estudiupdate' , estudiante.codigo]" style="cursor:pointer">{{estudiante.telcel}}</td>
-                    <td [routerLink]="['estudiupdate' , estudiante.codigo]" style="cursor:pointer">{{estudiante.telfijo}}</td>
-                    <td [routerLink]="['estudiupdate' , estudiante.codigo]" style="cursor:pointer">{{estudiante.fecregistro | date}}</td>
+                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.identidad}}</td>
+                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.nombre}}</td>
+                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.apellido}}</td>
+                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.email}}</td>
+                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.telcel}}</td>
+                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.telfijo}}</td>
+                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.fecregistro | date}}</td>
                     <td [ngClass]="{'text-success': estudiante.estado, 'text-danger': !estudiante.estado }"> <strong>{{estudiante.estado && 'Activo' || 'Inactivo' }} </strong></td>
                     <td *ngIf="estudiante.estado">
                         <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Estudiante">
