@@ -40,7 +40,7 @@
                 <td>{{organizacion.descrip}}</td>
                 <td [ngClass]="{'text-success': organizacion.estado, 'text-danger': !organizacion.estado }"> <strong>{{organizacion.estado && 'Activo' || 'Inactivo' }} </strong></td>
                 <td *ngIf="organizacion.estado">
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Evento">
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Organización">
                         <i class="fas fa-times icon"></i>
                     </button>
                 </td>

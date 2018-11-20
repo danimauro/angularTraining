@@ -1,8 +1,9 @@
-export class Organizacion {
+export class Invitado {
     
     public codigo:string;
     public nombre:string;
-    public descrip:string;
+    public apellido:string;
+    public perfil:string;
     public imagen?:string;
     public estado?:boolean;
 

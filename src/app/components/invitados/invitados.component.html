@@ -1,3 +1,57 @@
-<p>
-  invitados works!
-</p>
+<h5 class="fuente2 text-center my-3"> Invitados registrados </h5>
+
+<hr>
+
+<div class="my-2">
+    <ul class="nav">
+        <li class="nav-item mr-2">
+            <button type="button" class="btn btn-success btn-sm">
+              <i class="fas fa-pen mr-2 icon"></i> Registrar Invitado
+            </button>
+        </li>
+        <li class="nav-item ml-auto">
+            <input class="form-control" [(ngModel)]="filterQuery" placeholder="Buscar por Nombre" />
+        </li>
+    </ul>
+</div>
+
+<div class="table-responsive">
+    <table class="table table-hover" [mfData]="invitados | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
+
+        <thead>
+            <tr>
+                <th style="width: 30%">
+                    <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
+                </th>
+                <th style="width: 50%">
+                    <mfDefaultSorter by="perfil">perfil</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                    <mfDefaultSorter by="estado">Estado</mfDefaultSorter>
+                </th>
+                <th style="width: 10%">
+                    <mfDefaultSorter></mfDefaultSorter>
+                </th>
+            </tr>
+        </thead>
+        <tbody>
+            <tr *ngFor="let invitados of mf.data">
+                <td>{{invitados.nombre}} {{invitados.apellido}}</td>
+                <td>{{invitados.perfil}}</td>
+                <td [ngClass]="{'text-success': invitados.estado, 'text-danger': !invitados.estado }"> <strong>{{invitados.estado && 'Activo' || 'Inactivo' }} </strong></td>
+                <td *ngIf="invitados.estado">
+                    <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Invitado">
+                        <i class="fas fa-times icon"></i>
+                    </button>
+                </td>
+            </tr>
+        </tbody>
+        <tfoot>
+            <tr>
+                <td colspan="6">
+                    <mfBootstrapPaginator [rowsOnPageSet]="[5,10,25]"></mfBootstrapPaginator>
+                </td>
+            </tr>
+        </tfoot>
+    </table>
+</div>

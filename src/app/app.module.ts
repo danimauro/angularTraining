@@ -77,7 +77,6 @@ import { AlertsModule } from 'angular-alert-module';
     FormsModule,
     DataTableModule,
     ReactiveFormsModule,
-    AlertsModule.forRoot(),
     RouterModule.forRoot( ROUTES, { useHash: true } )
   ],
   providers: [ 

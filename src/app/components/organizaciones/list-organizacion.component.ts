@@ -26,6 +26,25 @@ export class ListOrganizacionComponent implements OnInit {
 
     this._organizacionService.getOrganizaciones().subscribe( (organizacionesDB:Organizacion[]) => {
       this.organizaciones = organizacionesDB;
+    }, (errorService) => {
+      
+      //manejo de errores
+      this.error = true;
+
+      // Se manejan los errores por medio del codigo de respuesta de la petición
+      if(errorService.status == 400){
+
+        this.mensajeError = errorService.error.err.message;
+
+      }else if(errorService.status == 0 || errorService.status == 500){
+
+        this.mensajeError = "Error en la comunicación con el servidor"
+
+      }else if(errorService.status == 401){
+
+        this.mensajeError = this.mensajeError = errorService.error.err.message;
+
+      }
     });
   }
 
