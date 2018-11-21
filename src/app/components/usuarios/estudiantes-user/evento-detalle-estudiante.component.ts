@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EventoService } from '../../../services/evento.service'
 import { Evento } from '../../../models/evento.model';
 
@@ -10,9 +10,12 @@ import { Evento } from '../../../models/evento.model';
 
 export class EventoDetalleEstudianteComponent  {
 
-  
-  public eventoEstudiante:Evento;
-  public error:boolean = false;
+  public eventoEstudiante: Evento[];
+  public cargo:boolean = false;
+
+  //alert
+  public alertClosed: boolean = false;
+  public type:string;
   public mensajeError:string;
 
   //datatable
@@ -22,7 +25,8 @@ export class EventoDetalleEstudianteComponent  {
   public sortOrder = "asc";
 
   constructor(public _eventoService:EventoService,
-              public _activatedRoute:ActivatedRoute ) { 
+              public _activatedRoute:ActivatedRoute,
+              public router:Router) { 
      //se validan los parametros enviados por la url
      this._activatedRoute.parent.params.subscribe( params => {
       this.getEventosXestudiante( params['codigo'] );
@@ -30,30 +34,43 @@ export class EventoDetalleEstudianteComponent  {
   }
 
   getEventosXestudiante(codigo:string){
-    this._eventoService.getEventosXestudiante(codigo).subscribe( (eventosXestudiante:Evento) => {
+
+    this._eventoService.getEventosXestudiante(codigo).subscribe( (eventosXestudiante:Evento[]) => {
 
       this.eventoEstudiante = eventosXestudiante;
 
-    }), (errorService) => {
-      //manejo de errores
-      this.error = true;
+      if(this.eventoEstudiante.length == 0){
+
+        this.alertClosed = true;
+        this.type = "info";
+        this.mensajeError = "Estudiante sin eventos asignados";
+
+      }else{
+
+        this.cargo = true;
+
+      }
+      
+    }, (errorService) => {
 
       // Se manejan los errores por medio del codigo de respuesta de la petición
-      if(errorService.status == 400){
-
-        this.mensajeError = errorService.error.err.message;
-
-      }else if(errorService.status == 0 || errorService.status == 500){
-
-        this.mensajeError = "Error en la comunicación con el servidor"
+      if(errorService.status == 0 || errorService.status == 500){
+        
+        this.alertClosed = true;
+        this.type = "danger";
+        this.mensajeError = "Error al comunicarse con el servidor"; 
 
       }else if(errorService.status == 401){
 
-        this.mensajeError = this.mensajeError = errorService.error.err.message;
+        this.alertClosed = true;
+        this.type = "danger";
+        this.mensajeError = this.mensajeError = errorService.error.message;
+        this.mensajeError += `, Debe autenticarse nuevamente..`;
+        setTimeout(() => this.router.navigateByUrl('login'), 9000);
 
-      };
+      }
 
-    }
+    });
     
   };
 

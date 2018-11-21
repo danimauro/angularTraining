@@ -16,15 +16,10 @@ export class SidebarComponent implements OnInit {
               private router:Router) { }
 
   ngOnInit() {
-    
-    if(!this._userService.getUserLoggedIn()){
-      this.router.navigateByUrl('/login');
-    }
-    
     this.nombre = this._userService.getNombre();
-    
-
   }
+
+  
   //mostrar y ocultar el menu lateral
   sidebar(){
     if(this.side){

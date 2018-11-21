@@ -10,7 +10,8 @@ export class EstudianteService {
 
   // Variables privadas del servicio
   private url:string = 'http://localhost:3000'; 
-  public estudiantes:Estudiante;
+  private estudiantes: Estudiante[];
+  private estudiante: Estudiante;
 
   constructor(private http: HttpClient, 
               private _userService:UserService,
@@ -56,8 +57,8 @@ export class EstudianteService {
   // Este metodo devuelve un observable con los datos de los estudiantes registrados en el sistema
   getEstudiantes(){    
     
-    return this.http.get<Estudiante>(`${this.url}/estudiantes`, this.getHeaders())
-                    .pipe( map( (estudiantesDB:Estudiante) => {
+    return this.http.get<Estudiante[]>(`${this.url}/estudiantes`, this.getHeaders())
+                    .pipe( map( (estudiantesDB:Estudiante[]) => {
                         return this.estudiantes = estudiantesDB['estudiantesDB'];
                     }));
   }
@@ -67,8 +68,8 @@ export class EstudianteService {
 
     return this.http.get<Estudiante>(`${this.url}/estudiante/${ codigo }`, this.getHeaders())
                     .pipe( map( (estudianteDB:Estudiante) => {
-                      this.estudiantes = estudianteDB['estudiantesDB'][0];
-                      return this.estudiantes;
+                      this.estudiante = estudianteDB['estudiantesDB'][0];
+                      return this.estudiante;
                     }));
 
   }
@@ -86,7 +87,7 @@ export class EstudianteService {
   // Este metodo devuelve un observable indicando la actualización del estudiante
   putEstudiante(estudiante: Estudiante, codigoEstudiante:string){
     
-    let body = `nombre=${estudiante.nombre}&apellido=${estudiante.apellido}
+    const body = `nombre=${estudiante.nombre}&apellido=${estudiante.apellido}
                 &telfijo=${estudiante.telfijo}&telcel=${estudiante.telcel}
                 &email=${estudiante.email}&edad=${estudiante.edad}`;
 

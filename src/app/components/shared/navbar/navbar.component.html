@@ -8,7 +8,8 @@
     <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
             <li class="nav-item">
-                <a class="nav-link" href="#" routerLink="/login"><i class="fas fa-home icon mr-2"></i><span class="sr-only">(current)</span> Inicio </a>
+                <a class="nav-link" *ngIf="_userService.isLogged()" [routerLink]="['/home']"><i class="fas fa-home icon mr-2"></i><span class="sr-only">(current)</span> Inicio </a>
+                <a class="nav-link" *ngIf="!_userService.isLogged()" [routerLink]="['/login']"><i class="fas fa-home icon mr-2"></i><span class="sr-only">(current)</span> Inicio </a>
             </li>
         </ul>
     </div>

@@ -23,7 +23,7 @@ import { AdminUsersComponent  } from './components/usuarios/admin-users/admin-us
 import { InvitadosComponent } from './components/invitados/invitados.component';
 import { OrganizacionesComponent } from './components/organizaciones/organizaciones.component';
 import { ListOrganizacionComponent } from './components/organizaciones/list-organizacion.component';
-
+import { DetalleOrganizacionComponent } from './components/organizaciones/detalle-organizacion.component';
 import { EventosComponent } from './components/eventos/eventos.component';
 
 // Routas
@@ -44,13 +44,14 @@ import { EventoService } from './services/evento.service';
 //guards
 import { ValidUserGuard } from './guards/valid-user.guard';
 
+//pipes
 import { DataFilterPipe } from './pipes/data-filter.pipe';
 
 //datatable 
 import { DataTableModule } from 'angular-6-datatable';
 
-//alerts
-import { AlertsModule } from 'angular-alert-module';
+// Bootstrap para angular
+import { NgbModule } from '@ng-bootstrap/ng-bootstrap';
 
 @NgModule({
   declarations: [
@@ -69,14 +70,16 @@ import { AlertsModule } from 'angular-alert-module';
     InvitadosComponent,
     OrganizacionesComponent,
     ListOrganizacionComponent,
+    DetalleOrganizacionComponent,
     DataFilterPipe
   ],
   imports: [
     BrowserModule,
+    NgbModule,
     HttpClientModule,
     FormsModule,
-    DataTableModule,
     ReactiveFormsModule,
+    DataTableModule,
     RouterModule.forRoot( ROUTES, { useHash: true } )
   ],
   providers: [ 

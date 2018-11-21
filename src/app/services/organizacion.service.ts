@@ -38,11 +38,38 @@ export class OrganizacionService {
 
   }
 
+  // Se definen los headers de las peticiones, en este caso las peticiones POST
+  private postHeaders(){
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'token': this._userService.getToken(),
+        'Content-Type':'application/x-www-form-urlencoded', 
+        'Access-Control-Allow-Origin' : '*'
+      })
+
+    }
+
+    return httpOptions;
+    
+  }
+
   getOrganizaciones(){
     return this.http.get<Organizacion[]>(`${this.url}/organizaciones`, this.getHeaders()).pipe( map( (organizacionesDB: Organizacion[]) => {
 
       return this.organizaciones = organizacionesDB['organiDB'];
 
     }));
+  }
+
+  postOrganizacion(organizacion:Organizacion){
+
+    let body = `nombre=${organizacion.nombre}&imagen=${organizacion.imagen}&descrip=${organizacion.descrip}`
+
+    return this.http.post<Organizacion>(`${this.url}/organizacion`, body, this.postHeaders())
+                    .pipe( map( (res:any) => {
+                        return res.message;
+                    }));
+
   }
 }

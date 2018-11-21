@@ -5,9 +5,7 @@
 <div class="my-2">
     <ul class="nav">
         <li class="nav-item mr-2">
-            <button type="button" class="btn btn-success btn-sm">
-              <i class="fas fa-pen mr-2 icon"></i> Registrar Organización
-            </button>
+            <button class="btn btn-success btn-sm" (click)="open(content)"><i class="fas fa-pen mr-2 icon"></i> Registrar Organización</button>
         </li>
         <li class="nav-item ml-auto">
             <input class="form-control" [(ngModel)]="filterQuery" placeholder="Buscar por Nombre" />
@@ -55,3 +53,65 @@
         </tfoot>
     </table>
 </div>
+<!-- Modal para registrar una organización -->
+<ng-template #content let-modal>
+
+    <div class="modal-header">
+        <h5 class="modal-title" id="modal-basic-title">Registrar Organización</h5>
+        <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')">
+            <span aria-hidden="true">&times;</span>
+        </button>
+    </div>
+
+    <div class="modal-body">
+
+        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="correcto">
+            <strong>Muy Bien!...</strong> {{ mensajeCorrecto }}
+            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                <span aria-hidden="true">&times;</span>
+            </button>
+        </div>
+
+        <form [formGroup]="formAddOrgani" (ngSubmit)="addOrganizacion()">
+
+            <div class="form-row">
+                <div class="form-group col-xs-12 col-sm-6">
+                    <!-- Nombre -->
+                    <label for="nombre">Nombre</label>
+                    <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre" [ngClass]="{ 'is-invalid': formAddOrgani.controls['nombre'].errors?.required }">
+
+                    <div *ngIf="formAddOrgani.controls['nombre'].errors?.required" class="invalid-feedback">
+                        Este campo es requerido
+                    </div>
+                </div>
+                <div class="form-group col-xs-12 col-sm-6">
+                    <!-- Imagen -->
+                    <label for="imagen">Imagen</label>
+                    <div class="input-group">
+                        <div class="custom-file">
+                            <input type="file" formControlName="imagen" name="imagen" class="custom-file-input" id="imagen" aria-describedby="imagen" [ngClass]="{ 'is-invalid': formAddOrgani.controls['imagen'].errors?.required }">
+                            <label class="custom-file-label" for="imagen">Seleccione..</label>
+                        </div>
+                    </div>
+
+                    <div *ngIf="formAddOrgani.controls['imagen'].errors?.required" class="invalid-feedback">
+                        Este campo es requerido
+                    </div>
+                </div>
+            </div>
+
+            <div class="form-row">
+                <div class="form-group col-xs-12 col-sm-12">
+                    <!-- Descripción -->
+                    <label for="identidad">Descripción</label>
+                    <textarea class="form-control" formControlName="descrip" name="descrip" id="descrip" rows="3" placeholder="Descripción" [ngClass]="{ 'is-invalid': formAddOrgani.controls['descrip'].errors?.required }"></textarea>
+                    <div *ngIf="formAddOrgani.controls['descrip'].errors?.required" class="invalid-feedback">
+                        Este campo es requerido
+                    </div>
+                </div>
+            </div>
+            <button type="submit" [disabled]="!formAddOrgani.valid" class="btn btn-primary">Guardar</button>
+        </form>
+
+    </div>
+</ng-template>

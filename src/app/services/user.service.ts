@@ -12,6 +12,7 @@ export class UserService {
   setUserLoggedIn(user: Usuario){
 
     this.isUserLoggedIn = true;
+   
     localStorage.setItem('token', JSON.stringify(user.token));
     localStorage.setItem('nombre', JSON.stringify(`${ user.nombre } ${user.apellido}`));
 
@@ -47,6 +48,7 @@ export class UserService {
   getNombre(){
     return JSON.parse(localStorage.getItem('nombre'));
   }
+
 
 
 }

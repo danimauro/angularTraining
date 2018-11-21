@@ -1,5 +1,5 @@
 import { Component } from '@angular/core';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 import { EstudianteService } from '../../../services/estudiante.service';
 import { Estudiante } from '../../../models/estudiante.model';
 
@@ -12,12 +12,16 @@ import { Estudiante } from '../../../models/estudiante.model';
 export class DetalleEstudiantesComponent {
 
   public estudiante: Estudiante;
-  public error: boolean;
   public mensajeError: string;
   public cargo:boolean = false;
 
+  //alert
+  public alertClosed: boolean = false;
+  public type:string;
+
   constructor(private _estudianteService:EstudianteService,
-              private activatedRoute:ActivatedRoute) { 
+              private activatedRoute:ActivatedRoute,
+              private router:Router) { 
 
      //se validan los parametros enviados por la url
      this.activatedRoute.parent.params.subscribe( params => {
@@ -27,6 +31,7 @@ export class DetalleEstudiantesComponent {
   }
 
   getEstudiante(codigo:string){
+
     this._estudianteService.getEstudiante(codigo).subscribe( (estudianteDB:Estudiante) => {
       
       this.estudiante = estudianteDB;
@@ -34,21 +39,28 @@ export class DetalleEstudiantesComponent {
 
     }, (errorService) => {
       
-      //manejo de errores
-      this.error = true;
 
       // Se manejan los errores por medio del codigo de respuesta de la petición
       if(errorService.status == 400){
 
-        this.mensajeError = errorService.error.err.message;
+        //si se prensenta un error se muestra una alerta en la vista
+        this.mensajeError = errorService.error.message; 
+        this.alertClosed = true;
+        this.type = "danger";
+        setTimeout(() => this.alertClosed = false, 5000);
 
       }else if(errorService.status == 0 || errorService.status == 500){
 
         this.mensajeError = "Error en la comunicación con el servidor"
+        this.alertClosed = true;
+        this.type = "danger";
+        setTimeout(() => this.alertClosed = false, 5000);
 
       }else if(errorService.status == 401){
 
-        this.mensajeError = this.mensajeError = errorService.error.err.message;
+        this.mensajeError = this.mensajeError = errorService.error.message;
+        this.mensajeError += `, Debe autenticarse nuevamente..`;
+        setTimeout(() => this.router.navigateByUrl('login'), 7000);
 
       }
     });

@@ -11,6 +11,7 @@ export class EventoService {
   // Variables privadas del servicio
   private url:string = 'http://localhost:3000'; 
   private evento:Evento;
+  private eventos:Evento[];
 
   constructor(private http:HttpClient,
               private _userService:UserService) { }
@@ -32,10 +33,17 @@ export class EventoService {
   // Este metodo devuelve un observable con los datos de un estudiante relacionado con los eventos
   getEventosXestudiante(codigo:string){
 
-    return this.http.get(`${this.url}/estuevento/${ codigo }`, this.getHeaders())
-                    .pipe( map( (eventosEstudiante:Evento) => {
-                        this.evento = eventosEstudiante['eventosEstudianteDB'][0].eventoUsuario;
-                        return this.evento;
+    return this.http.get<Evento[]>(`${this.url}/estuevento/${ codigo }`, this.getHeaders())
+                    .pipe( map( (eventosEstudiante:Evento[]) => {
+                      
+                        //Validar cuando la respuesta de la peticion devuelve un array sin datos
+                        if(!eventosEstudiante['eventosEstudianteDB'][0]){
+                          return this.eventos = [];
+                        }else{
+                          this.eventos = eventosEstudiante['eventosEstudianteDB'][0].eventoUsuario;
+                          return this.eventos;      
+                        }
+                                      
                     }));
 
   }

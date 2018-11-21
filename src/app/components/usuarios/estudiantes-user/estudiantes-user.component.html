@@ -1,80 +1,71 @@
-<!-- <div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error">
-    {{ mensajeError }} , por seguridad en la aplicación <a href="#" (click)="renovarToken()">Inicia sesión</a> nuevamente.
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-</div> -->
-<div class="alert alert-danger alert-dismissible fade show" role="alert" *ngIf="error">
-    {{ mensajeError }}
-    <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-      <span aria-hidden="true">&times;</span>
-    </button>
-</div>
+<ngb-alert [type]="type" *ngIf="alertClosed" (close)="alertClosed = false"> {{ mensajeError }}</ngb-alert>
 
-<div class="container" *ngIf="!error">
+<div class="container">
 
-    <h4 class="fuente2 text-center mt-3"> Gestión de estudiantes</h4>
+    <h5 class="fuente2 text-center mt-3"> Gestión de estudiantes</h5>
     <hr>
+
     <div class="my-3">
         <ul class="nav">
-            <li class="nav-item ">
+            <li class="nav-item">
                 <input class="form-control" [(ngModel)]="filterQuery" placeholder="Buscar por Identidad " />
             </li>
         </ul>
     </div>
+
     <div class="table-responsive">
         <table class="table table-hover" [mfData]="estudiantes | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 
             <thead>
                 <tr>
-                    <th style="width: 10%">
+                    <th>
                         <mfDefaultSorter by="identidad">Identidad</mfDefaultSorter>
                     </th>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
+                    <th>
+                        <mfDefaultSorter by="nombre">Nombre Completo</mfDefaultSorter>
                     </th>
-                    <th style="width: 20%">
-                        <mfDefaultSorter by="apellido">Apellido</mfDefaultSorter>
-                    </th>
-                    <th style="width: 20%">
+                    <th>
                         <mfDefaultSorter by="email">Correo</mfDefaultSorter>
                     </th>
-                    <th style="width: 10%">
+                    <th>
                         <mfDefaultSorter by="telcelular">Tel Celular</mfDefaultSorter>
                     </th>
-                    <th style="width: 10%">
+                    <th>
                         <mfDefaultSorter by="telfijo">Tel Fijo</mfDefaultSorter>
                     </th>
-                    <th style="width: 10%">
+                    <th>
                         <mfDefaultSorter by="fecregistro">Fecha Registro</mfDefaultSorter>
                     </th>
-                    <th style="width: 10%">
-                        <mfDefaultSorter>Estado</mfDefaultSorter>
+                    <th>
+                        <mfDefaultSorter by="estado">Estado</mfDefaultSorter>
+                    </th>
+                    <th>
+                        <mfDefaultSorter>Acción</mfDefaultSorter>
                     </th>
                 </tr>
             </thead>
+
             <tbody>
-                <tr *ngFor="let estudiante of mf.data">
-                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.identidad}}</td>
-                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.nombre}}</td>
-                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.apellido}}</td>
-                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.email}}</td>
-                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.telcel}}</td>
-                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.telfijo}}</td>
-                    <td [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">{{estudiante.fecregistro | date}}</td>
+                <tr *ngFor="let estudiante of mf.data" [routerLink]="['estudiante' , estudiante.codigo]" style="cursor:pointer">
+                    <td>{{estudiante.identidad}}</td>
+                    <td>{{estudiante.nombre}} {{estudiante.apellido}}</td>
+                    <td>{{estudiante.email}}</td>
+                    <td>{{estudiante.telcel}}</td>
+                    <td>{{estudiante.telfijo}}</td>
+                    <td>{{estudiante.fecregistro | date}}</td>
+
                     <td [ngClass]="{'text-success': estudiante.estado, 'text-danger': !estudiante.estado }"> <strong>{{estudiante.estado && 'Activo' || 'Inactivo' }} </strong></td>
-                    <td *ngIf="estudiante.estado">
-                        <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Estudiante">
-                                <i class="fas fa-times icon"></i>
-                        </button>
+
+                    <td *ngIf="estudiante.estado" class="text-center">
+                        <i class="fas fa-times icon text-danger" data-toggle="tooltip" data-placement="top" title="Desactivar Estudiante"></i>
                     </td>
-                    <td *ngIf="!estudiante.estado">
-                        <button type="button" class="btn btn-success btn-sm" data-toggle="tooltip" data-placement="top" title="Activar Estudiante">
-                                <i class="fas fa-check-circle icon"></i>
-                        </button>
+                    <td *ngIf="!estudiante.estado" class="text-center">
+                        <i class="fas fa-check-circle icon text-success" data-toggle="tooltip" data-placement="top" title="Activar Estudiante"></i>
                     </td>
+
                 </tr>
             </tbody>
+
             <tfoot>
                 <tr>
                     <td colspan="6">

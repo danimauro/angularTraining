@@ -85,4 +85,34 @@ export class UpdateEstudiantesUserComponent{
     });
   }
 
+
+  onSubmitActualizarEstu(){
+
+    this._estudianteService.putEstudiante(this.formActualizarEstudiante.value, this.estudiante.codigo).subscribe( (data: any) => {
+      
+      this.correcto = true;
+      this.mensajeCorrecto = data.message;
+
+    }, ( errorService ) => {
+      
+      //manejo de errores
+      this.error = true;
+
+      // Se manejan los errores por medio del codigo de respuesta de la petición
+      if(errorService.status == 400){
+
+        this.mensajeError = errorService.error.message;
+
+      }else if(errorService.status == 0 || errorService.status == 500){
+
+        this.mensajeError = "Error en la comunicación con el servidor"
+
+      }else if(errorService.status == 401){
+
+        this.mensajeError = this.mensajeError = errorService.error.message;
+
+      }
+
+     });
+  }
 }

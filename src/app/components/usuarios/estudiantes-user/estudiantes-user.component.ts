@@ -1,7 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { EstudianteService } from '../../../services/estudiante.service';
-import { UserService } from '../../../services/user.service';
-import { Usuario } from '../../../models/usuario.model';
+import { Estudiante } from '../../../models/estudiante.model';
 import { Router } from '@angular/router';
 
 @Component({
@@ -10,9 +9,13 @@ import { Router } from '@angular/router';
 })
 export class EstudiantesUserComponent implements OnInit {
 
-  public estudiantes: Usuario;
-  public error: boolean;
+  public estudiantes: Estudiante [];
+  
+  // Manejo de errores - alerts 
   public mensajeError: string;
+  public alertClosed: boolean = false;
+  public type:string;
+
   
   //datatable
   public rowsOnPage = 5;
@@ -20,51 +23,37 @@ export class EstudiantesUserComponent implements OnInit {
   public sortBy = "email";
   public sortOrder = "asc";
 
-  constructor(private _userService:UserService, 
-              private _estudianteService:EstudianteService,
+  constructor(private _estudianteService:EstudianteService,
               private router: Router) {}
 
   ngOnInit() {
     
     //get a todos los estudiantes registrados
-    this._estudianteService.getEstudiantes().subscribe((estudiantesDB:Usuario) => {
+    this._estudianteService.getEstudiantes().subscribe((estudiantesDB:Estudiante[]) => {
 
       this.estudiantes = estudiantesDB;
 
     }, (errorService) => {
 
-      this.error = true;
-
       // Se manejan los errores por medio del codigo de respuesta de la petición
       if(errorService.status == 400){
 
-        this.mensajeError = errorService.error.err.message;
+        //si se prensenta un error se muestra una alerta en la vista
+        this.mensajeError = errorService.error.message;        
+        this.alertClosed = true;
+        this.type = "danger";
+        setTimeout(() => this.alertClosed = false, 7000);
 
       }else if(errorService.status == 401){
 
-        this.mensajeError = this.mensajeError = errorService.error.err.message;
+        this.mensajeError = this.mensajeError = errorService.error.message;
+        this.mensajeError += `, Debe autenticarse nuevamente..`;
+        setTimeout(() => this.router.navigateByUrl('login'), 8000);
 
       }
 
     });
 
-  }  
-
-  //get a solo el estudiante registrado
-  getEstudiante(estudiante: Usuario){
-    this.router.navigate(['estudiupdate', estudiante.codigo ]);
-  }
-  
-  //Borra el usuario del localstorage y lo redirecciona para 
-  renovarToken(){
-
-    this._userService.renovarToken();
-    this.router.navigateByUrl('login');
-    
-  }
-
-
-  
-
+  }   
 
 }

@@ -27,7 +27,7 @@ export class LoginService {
   public getLogin(loginObj: Usuario){
 
     // Se define el cuerpo de la petición
-    let body = `email=${loginObj.email}&password=${loginObj.password}`;
+    let body = `email=${ loginObj.email }&password=${ loginObj.password }`;
 
     // Se crea la petición POST 
     return this.http.post<Usuario>(`${this.url}/login`, body , this.httpOptions).pipe( 
@@ -46,7 +46,6 @@ export class LoginService {
       }));
 
   }
-
 
 
 }

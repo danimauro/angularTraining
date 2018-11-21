@@ -21,7 +21,7 @@
 
 
 
-            <form [formGroup]="formActualizarEstudiante" *ngIf="cargo" class="mt-3 needs-validation">
+            <form [formGroup]="formActualizarEstudiante" (ngSubmit)="onSubmitActualizarEstu()" *ngIf="cargo" class="mt-3 needs-validation">
 
                 <div class="my-2">
                     <ul class="nav">
