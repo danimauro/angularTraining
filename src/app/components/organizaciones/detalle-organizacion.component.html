@@ -1,0 +1,99 @@
+<div class="m-2" *ngIf="cargo">
+
+    <h5 class="fuente2 text-center my-3"> {{ organizacion.nombre }} </h5>
+
+    <hr>
+
+    <form [formGroup]="formUpdateOrgani" (ngSubmit)="updateOrganizacion()" class="m-auto">
+
+        <div class="mt-2 mb-4">
+            <ul class="nav">
+                <li class="nav-item mr-2">
+                    <button type="button" class="btn btn-info btn-sm" [routerLink]="['../../']"><i class="fas fa-arrow-left"></i> Volver</button>
+                </li>
+                <li class="nav-item mr-2">
+                    <button type="submit" id="btnActualizar" [disabled]="!formUpdateOrgani.dirty || !formUpdateOrgani.valid" class="btn btn-primary btn-sm"><i class="fas fa-pen mr-2 icon"></i>
+                    Actualizar</button>
+                </li>
+            </ul>
+        </div>
+
+
+        <ngb-alert [type]="type" class="my-3" *ngIf="alertClosed" (close)="alertClosed = false"> {{ mensaje }}</ngb-alert>
+
+        <div class="row">
+
+            <div class="form-group col-xs-12 col-sm-12 col-md-5">
+
+                <div>
+                    <!-- Nombre -->
+                    <label for="nombre">Nombre</label>
+                    <input formControlName="nombre" name="nombre" type="text" class="form-control" placeholder="Nombre" [ngClass]="{ 'is-invalid': formUpdateOrgani.controls['nombre'].errors?.required }">
+
+                    <div *ngIf="formUpdateOrgani.controls['nombre'].errors?.required" class="invalid-feedback">
+                        Este campo es requerido
+                    </div>
+                </div>
+
+                <div class="mt-3">
+                    <!-- Descripción -->
+                    <label for="identidad">Descripción</label>
+                    <textarea class="form-control" formControlName="descrip" name="descrip" rows="3" placeholder="Descripción" [ngClass]="{ 'is-invalid': formUpdateOrgani.controls['descrip'].errors?.required }"></textarea>
+
+                    <div *ngIf="formUpdateOrgani.controls['descrip'].errors?.required" class="invalid-feedback">
+                        Este campo es requerido
+                    </div>
+                </div>
+
+                <div class="mt-4">
+                    <div class="text-center">
+                        <img [src]="organizacion.imagen" alt="imagen-actual" class="img-fluid mb-2">
+
+                        <!-- Imagen -->
+                        <div class="custom-file">
+                            <input type="file" (change)="onFileSelected($event)" class="custom-file-input" id="customFileLang" lang="es" [ngClass]="{ 'is-invalid': formUpdateOrgani.controls['imagen'].errors?.required }">
+                            <label class="custom-file-label" for="customFileLang">Cambiar imagen</label>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+            <div class="form-group col-xs-12 col-sm-12 col-md-7">
+
+                <h5 class="text-center fuente2">Facultades</h5>
+
+                <table class="table">
+                    <thead>
+                        <tr>
+                            <th scope="col">#</th>
+                            <th scope="col">First</th>
+                            <th scope="col">Last</th>
+                            <th scope="col">Handle</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <th scope="row">1</th>
+                            <td>Mark</td>
+                            <td>Otto</td>
+                            <td>@mdo</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">2</th>
+                            <td>Jacob</td>
+                            <td>Thornton</td>
+                            <td>@fat</td>
+                        </tr>
+                        <tr>
+                            <th scope="row">3</th>
+                            <td>Larry</td>
+                            <td>the Bird</td>
+                            <td>@twitter</td>
+                        </tr>
+                    </tbody>
+                </table>
+
+            </div>
+        </div>
+    </form>
+</div>

@@ -90,7 +90,7 @@ export class EstudianteService {
     const body = `nombre=${estudiante.nombre}&apellido=${estudiante.apellido}
                 &telfijo=${estudiante.telfijo}&telcel=${estudiante.telcel}
                 &email=${estudiante.email}&edad=${estudiante.edad}`;
-
+    
     return this.http.put(`${this.url}/estudiante/${ codigoEstudiante }`, body , this.postHeaders());
   }
 }

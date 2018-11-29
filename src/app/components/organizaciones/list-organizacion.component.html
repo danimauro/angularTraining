@@ -5,7 +5,7 @@
 <div class="my-2">
     <ul class="nav">
         <li class="nav-item mr-2">
-            <button class="btn btn-success btn-sm" (click)="open(content)"><i class="fas fa-pen mr-2 icon"></i> Registrar Organización</button>
+            <button class="btn btn-success btn-sm" (click)="addOrga(content)"><i class="fas fa-plus mr-2 icon"></i> Registrar Organización</button>
         </li>
         <li class="nav-item ml-auto">
             <input class="form-control" [(ngModel)]="filterQuery" placeholder="Buscar por Nombre" />
@@ -13,35 +13,39 @@
     </ul>
 </div>
 
-<div class="table-responsive">
+<ngb-alert [type]="type" class="mt-3" *ngIf="alertClosed" (close)="alertClosed = false"> {{ mensaje }}</ngb-alert>
+
+<div class="table-responsive" *ngIf="cargo">
     <table class="table table-hover" [mfData]="organizaciones | dataFilter : filterQuery" #mf="mfDataTable" [mfRowsOnPage]="rowsOnPage" [(mfSortBy)]="sortBy" [(mfSortOrder)]="sortOrder">
 
         <thead>
             <tr>
-                <th style="width: 30%">
+                <th>
                     <mfDefaultSorter by="nombre">Nombre</mfDefaultSorter>
                 </th>
-                <th style="width: 50%">
+                <th>
                     <mfDefaultSorter by="descrip">Descripción</mfDefaultSorter>
                 </th>
-                <th style="width: 10%">
+                <th>
                     <mfDefaultSorter by="estado">Estado</mfDefaultSorter>
                 </th>
-                <th style="width: 10%">
-                    <mfDefaultSorter></mfDefaultSorter>
+                <th>
+                    <mfDefaultSorter>Acción</mfDefaultSorter>
                 </th>
             </tr>
         </thead>
         <tbody>
-            <tr *ngFor="let organizacion of mf.data">
+            <tr *ngFor="let organizacion of mf.data" [routerLink]="['detalle', organizacion.codigo]">
+
                 <td>{{organizacion.nombre}}</td>
                 <td>{{organizacion.descrip}}</td>
+
                 <td [ngClass]="{'text-success': organizacion.estado, 'text-danger': !organizacion.estado }"> <strong>{{organizacion.estado && 'Activo' || 'Inactivo' }} </strong></td>
+
                 <td *ngIf="organizacion.estado">
-                    <button type="button" class="btn btn-danger btn-sm" data-toggle="tooltip" data-placement="top" title="Desactivar Organización">
-                        <i class="fas fa-times icon"></i>
-                    </button>
+                    <i class="fas fa-times icon text-danger" style="cursor: pointer" data-toggle="tooltip" data-placement="top" title="Desactivar Organización"></i>
                 </td>
+
             </tr>
         </tbody>
         <tfoot>
@@ -53,6 +57,7 @@
         </tfoot>
     </table>
 </div>
+
 <!-- Modal para registrar una organización -->
 <ng-template #content let-modal>
 
@@ -65,12 +70,7 @@
 
     <div class="modal-body">
 
-        <div class="alert alert-success alert-dismissible fade show" role="alert" *ngIf="correcto">
-            <strong>Muy Bien!...</strong> {{ mensajeCorrecto }}
-            <button type="button" class="close" data-dismiss="alert" aria-label="Close">
-                <span aria-hidden="true">&times;</span>
-            </button>
-        </div>
+        <ngb-alert [type]="type" class="my-2" *ngIf="alertClosed" (close)="alertClosed = false"> {{ mensaje }}</ngb-alert>
 
         <form [formGroup]="formAddOrgani" (ngSubmit)="addOrganizacion()">
 
@@ -85,13 +85,12 @@
                     </div>
                 </div>
                 <div class="form-group col-xs-12 col-sm-6">
+
                     <!-- Imagen -->
                     <label for="imagen">Imagen</label>
-                    <div class="input-group">
-                        <div class="custom-file">
-                            <input type="file" formControlName="imagen" name="imagen" class="custom-file-input" id="imagen" aria-describedby="imagen" [ngClass]="{ 'is-invalid': formAddOrgani.controls['imagen'].errors?.required }">
-                            <label class="custom-file-label" for="imagen">Seleccione..</label>
-                        </div>
+                    <div class="custom-file">
+                        <input type="file" formControlName="imagen" (change)="onFileSelected($event)" name="imagen" class="custom-file-input" id="imagen" lang="es" [ngClass]="{ 'is-invalid': formAddOrgani.controls['imagen'].errors?.required }">
+                        <label class="custom-file-label" for="customFileLang">Imagen</label>
                     </div>
 
                     <div *ngIf="formAddOrgani.controls['imagen'].errors?.required" class="invalid-feedback">
@@ -110,7 +109,8 @@
                     </div>
                 </div>
             </div>
-            <button type="submit" [disabled]="!formAddOrgani.valid" class="btn btn-primary">Guardar</button>
+            <button type="submit" [disabled]="!formAddOrgani.valid" class="btn btn-primary mr-2">Guardar</button>
+            <button type="button" class="btn btn-secondary" (click)="modal.close()">Cerrar</button>
         </form>
 
     </div>

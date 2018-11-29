@@ -5,7 +5,7 @@ export class Estudiante {
     public apellido: string;
     public telfijo?: string;
     public telcel?: string;
-    public edad: string;
+    public edad?: string;
     public sexo?:string;
     public estado?: boolean;
     public fecregistro?: string;

@@ -54,8 +54,8 @@ export class UpdateEstudiantesUserComponent{
         'telfijo': new FormControl('',[Validators.required]),
         'telcel': new FormControl('',[Validators.required]),
         'email': new FormControl('',[Validators.required, Validators.pattern('^[_a-z0-9-]+(.[_a-z0-9-]+)*@[a-z0-9-]+(.[a-z0-9-]+)*(.[a-z]{2,4})$'),Validators.minLength(13)]),
-        'edad': new FormControl('',[Validators.required]),
-        'sexo': new FormControl('' ,[Validators.required]),
+        'edad': new FormControl({value: '', disabled:true},[Validators.required]),
+        'sexo': new FormControl({value: '', disabled:true} ,[Validators.required]),
         'fecregistro': new FormControl({value: '', disabled:true}),
         'estado': new FormControl('')
       });
